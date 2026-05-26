@@ -1,6 +1,7 @@
----@type
+---@type LazySpec
 return {
   "stevearc/aerial.nvim",
+  branch = "nvim-0.x",
   config = function()
     require("aerial").setup({
       backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
