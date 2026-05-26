@@ -1,0 +1,5 @@
+require("keymap.edit")
+require("keymap.movement")
+require("keymap.sidebar")
+require("keymap.telescope")
+require("keymap.claude")

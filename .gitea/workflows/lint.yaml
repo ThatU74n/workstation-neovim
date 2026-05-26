@@ -1,0 +1,29 @@
+---
+name: Lint on Pull Request 
+on:
+  pull_request:
+    branches: 
+      - main
+
+concurrency: 
+  group: lint
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint 
+    runs-on: infra
+    steps:
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 #v4
+      - run: |
+          sudo apt-get install -y cargo
+          cargo install selene stylua
+
+          # Stylua check 
+          stylua --check .
+
+          # Selene check
+          selene .
+
+
+
