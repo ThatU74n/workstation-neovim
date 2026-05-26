@@ -15,20 +15,21 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "ansible-language-server",
-          "helm-ls",
-          "lua-language-server",
+          "ansiblels",
+          "helm_ls",
+          "jdtls",
+          "lua_ls",
           "nginx-language-server",
-          "nil",
-          "terraform-ls",
-          "yaml-language-server",
+          "nills",
+          "terraformls",
+          "yamlls",
         },
         automatic_enable = {
           exclude = {
-            "ansible-language-server",
-            "helm-ls",
+            "ansiblels",
+            "helm_ls",
             "jdtls",
-            "yaml-language-server",
+            "yamlls",
           },
         },
       })

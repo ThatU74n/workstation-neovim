@@ -22,7 +22,6 @@ vim.keymap.set("n", "<leader>9", ":BufferLineGoToBuffer 9<CR>", { desc = "Go to 
 vim.keymap.set("n", "<leader>0", ":BufferLineGoToBuffer 10<CR>", { desc = "Go to buffer 10", silent = true, noremap = true })
 vim.keymap.set("n", "<leader><Left>", ":BufferLineCyclePrev<CR>", { desc = "Go to previous buffer", silent = true, noremap = true })
 vim.keymap.set("n", "<leader><Right>", ":BufferLineCycleNext<CR>", { desc = "Go to next buffer", silent = true, noremap = true })
-vim.keymap.set("n", "<leader><Tab>d", ":bdelete<CR>", { desc = "Close current buffer", silent = true, noremap = true })
 
 
 --- Window movement 
