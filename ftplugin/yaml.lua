@@ -20,14 +20,14 @@ local server, root_dir
 
 root_dir = find_ancestor({ "Chart.yaml" })
 if root_dir then
-  server = "helm-ls"
+  server = "helm_ls"
 else
   root_dir = find_ancestor({ "ansible.cfg", "roles" })
   if root_dir then
-    server = "ansible-language-server"
+    server = "ansiblels"
   else
     root_dir = find_ancestor({ ".git" }) or vim.fn.getcwd()
-    server = "yaml-language-server"
+    server = "yamlls"
   end
 end
 
