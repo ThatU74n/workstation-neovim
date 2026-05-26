@@ -51,7 +51,7 @@ return {
       vim.api.nvim_set_hl(0, "NeoTreeAnsible", { fg = "#FFFFFF" })
       vim.api.nvim_set_hl(0, "NeoTreeGitHub",  { fg = "#181717" })
       vim.api.nvim_set_hl(0, "NeoTreeGitea",   { fg = "#609926" })
-      vim.api.nvim_set_hl(0, "NeoTreeHelm",    { fg = "#0F1689" })
+      vim.api.nvim_set_hl(0, "NeoTreeHelm",    { fg = "#3A46E8" })
       vim.api.nvim_set_hl(0, "NeoTreeTerraform", { fg = "#7B42BC" })
       vim.api.nvim_set_hl(0, "NeoTreeK8s",     { fg = "#326CE5" })
 
@@ -59,10 +59,12 @@ return {
         github          = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-github
         gitea           = { icon = " ", hl = "NeoTreeGitea" },           -- nf-dev-gitea
         github_actions  = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-github_actions
+        test            = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-test_tube
+        doc             = { icon = "󱔘 ", hl = "NeoTreeGitHub" },          -- nf-dev-document
         k8s             = { icon = " ", hl = "NeoTreeK8sIcon" },         -- nf-dev-kubernetes 
         ansible         = { icon = " ", hl = "NeoTreeAnsible" },         -- nf-dev-ansible 
         terraform       = { icon = " ", hl = "NeoTreeTerraform" },       -- nf-dev-terraform
-        helm            = { icon = " ", hl = "NeoTreeHelm" },            -- nf-dev-helm       
+        helm            = { icon = " ", hl = "NeoTreeHelm" },            -- nf-dev-helm 
       }
 
       local path_cache = {}
@@ -74,6 +76,10 @@ return {
           type = "github"
         elseif name == ".gitea" then
           type = "gitea"
+        elseif name == "docs" or name == "doc" then
+          type = "doc" 
+        elseif name == "tests" or name == "test" then 
+          type = "test"
         elseif name == "k8s" or name == "kubernetes" then
           type = "k8s"
         elseif vim.fn.filereadable(path .. "/ansible.cfg") == 1 then
@@ -99,12 +105,8 @@ return {
       local function render_file(path)
         local parent      = vim.fn.fnamemodify(path, ":h:t")
         local grandparent = vim.fn.fnamemodify(path, ":h:h:t")
-        if parent == "workflows" then
-          if grandparent == ".github" then
-            return { text = icons.github_actions.icon .. " ", highlight = icons.github_actions.hl }
-          elseif grandparent == ".gitea" then
-            return { text = icons.github_actions.icon .. " ", highlight = icons.github_actions.hl }
-          end
+        if parent == "workflows" and (grandparent == ".github" or grandparent == ".gitea") then
+          return { text = icons.github_actions.icon .. " ", highlight = icons.github_actions.hl }
         end
       end
 
@@ -118,6 +120,24 @@ return {
             enabled = true,
           },
           hijack_netrw_behavior = "open_current",
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = true,
+          },
+          components = {
+            icon = function(config, node, state)
+              local result 
+              if node.type == "directory" then 
+                local type = detect_project_type(node.path, node.name)
+                result = render_directory(type)
+              elseif node.type == "file" then 
+                result = render_file(node.path)
+              end 
+
+              return result or require("neo-tree.sources.filesystem.components").icon(config, node, state)
+            end
+          },
         },
         default_component_configs = {
           git_status = {
@@ -133,19 +153,6 @@ return {
               conflict  = "",
             },
           },
-        },
-        components = {
-          icon = function(config, node, state)
-            local result
-            if node.type == "directory" then
-              local ptype = detect_project_type(node.path, node.name)
-              result = render_directory(ptype)
-            elseif node.type == "file" then
-              result = render_file(node.path)
-            end
-
-            return result or require("neo-tree.sources.common.components").icon(config, node, state)
-          end,
         },
       })
     end,
