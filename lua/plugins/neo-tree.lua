@@ -79,9 +79,11 @@ return {
         elseif name == ".gitea" then
           type = "gitea"
         elseif name == "docs" or name == "doc" then
-          type = "doc" 
+          type = "doc"
         elseif name == "tests" or name == "test" then 
           type = "test"
+        elseif name == "argocd" or name == "gitops" then
+          type = "argocd"
         elseif name == "k8s" or name == "kubernetes" then
           type = "k8s"
         elseif vim.fn.filereadable(path .. "/ansible.cfg") == 1 then
