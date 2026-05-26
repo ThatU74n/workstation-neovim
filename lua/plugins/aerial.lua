@@ -4,7 +4,10 @@ return {
   branch = "nvim-0.11",
   config = function()
     require("aerial").setup({
-      backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+      backends = {
+        ["_"]            = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+        yaml             = { "treesitter" },
+      },
       layout = {
         default_direction = "right",
         placement = "edge",
@@ -45,14 +48,14 @@ return {
                 selection_range = item.selection_range,
               })
             end
-            if item.children and #item.children > 0 then 
+            if item.children and #item.children > 0 then
               item.children = add_seperators(item.children)
             end
             table.insert(result, item)
-          end 
+          end
 
           return result
-        end 
+        end
 
         return add_seperators(items)
       end,

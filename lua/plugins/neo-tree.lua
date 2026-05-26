@@ -112,12 +112,19 @@ return {
         if parent == "workflows" and (grandparent == ".github" or grandparent == ".gitea") then
           return { text = icons.github_actions.icon .. " ", highlight = icons.github_actions.hl }
         end
+
       end
+
+      require("nvim-web-devicons").setup({
+        override_by_extension = {
+          ["yaml"] = { icon = "󰈙", color = "#6d8086", name = "Yaml" },
+          ["yml"]  = { icon = "󰈙", color = "#6d8086", name = "Yml" },
+        },
+      })
 
       require("neo-tree").setup({
         close_if_last_window = true,
         window = {
-          position = "current",
           width = 30,
         },
         filesystem = {
@@ -132,13 +139,13 @@ return {
           },
           components = {
             icon = function(config, node, state)
-              local result 
-              if node.type == "directory" then 
+              local result
+              if node.type == "directory" then
                 local type = detect_project_type(node.path, node.name)
                 result = render_directory(type)
-              elseif node.type == "file" then 
+              elseif node.type == "file" then
                 result = render_file(node.path)
-              end 
+              end
 
               return result or require("neo-tree.sources.filesystem.components").icon(config, node, state)
             end
