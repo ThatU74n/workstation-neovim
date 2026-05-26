@@ -49,11 +49,12 @@ return {
     },
     config = function()
       vim.api.nvim_set_hl(0, "NeoTreeAnsible", { fg = "#FFFFFF" })
-      vim.api.nvim_set_hl(0, "NeoTreeGitHub",  { fg = "#181717" })
+      vim.api.nvim_set_hl(0, "NeoTreeGitHub",  { fg = "#FEFEFE" })
       vim.api.nvim_set_hl(0, "NeoTreeGitea",   { fg = "#609926" })
       vim.api.nvim_set_hl(0, "NeoTreeHelm",    { fg = "#3A46E8" })
       vim.api.nvim_set_hl(0, "NeoTreeTerraform", { fg = "#7B42BC" })
       vim.api.nvim_set_hl(0, "NeoTreeK8s",     { fg = "#326CE5" })
+      vim.api.nvim_set_hl(0, "NeoTreeArgoCD",  { fg = "#EE6600" })
 
       local icons = {
         github          = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-github
@@ -64,7 +65,8 @@ return {
         k8s             = { icon = " ", hl = "NeoTreeK8sIcon" },         -- nf-dev-kubernetes 
         ansible         = { icon = " ", hl = "NeoTreeAnsible" },         -- nf-dev-ansible 
         terraform       = { icon = " ", hl = "NeoTreeTerraform" },       -- nf-dev-terraform
-        helm            = { icon = " ", hl = "NeoTreeHelm" },            -- nf-dev-helm 
+        helm            = { icon = " ", hl = "NeoTreeHelm" },            -- nf-dev-helm
+        argocd          = { icon = " ", hl = "NeoTreeArgoCD" },          -- nf-dev-argocd
       }
 
       local path_cache = {}
@@ -113,6 +115,7 @@ return {
       require("neo-tree").setup({
         close_if_last_window = true,
         window = {
+          position = "current",
           width = 30,
         },
         filesystem = {
