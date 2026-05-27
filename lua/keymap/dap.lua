@@ -15,4 +15,4 @@ function M.setup()
   vim.keymap.set("n", "<leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "DAP frames" })
 end
 
-return M 
+return M
