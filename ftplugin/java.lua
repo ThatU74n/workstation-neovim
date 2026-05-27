@@ -47,7 +47,11 @@ local workspace_dir = home .. '/.local/share/jdtls/workspace/' .. vim.fn.fnamemo
 -- attach function for dap
 local on_attach = function(client, bufnr)
   require('keymap.dap').setup()
-  jdtls.setup_dap({ hotcodereplace = 'auto' })
+  jdtls.setup_dap({
+    config_overrides = {
+      hotcodereplace = 'auto',
+    },
+  })
 end
 
 

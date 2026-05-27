@@ -80,7 +80,7 @@ return {
           type = "gitea"
         elseif name == "docs" or name == "doc" then
           type = "doc"
-        elseif name == "tests" or name == "test" then 
+        elseif name == "tests" or name == "test" then
           type = "test"
         elseif name == "argocd" or name == "gitops" then
           type = "argocd"
@@ -88,7 +88,7 @@ return {
           type = "k8s"
         elseif vim.fn.filereadable(path .. "/ansible.cfg") == 1 then
           type = "ansible"
-        elseif vim.fn.filereadable(path .. "/main.tf") == 1 then 
+        elseif vim.fn.filereadable(path .. "/main.tf") == 1 then
           type = "terraform"
         elseif vim.fn.filereadable(path .. "/Chart.yaml") == 1
             or vim.fn.filereadable(path .. "/values.yaml") == 1 then
@@ -128,6 +128,7 @@ return {
           width = 30,
         },
         filesystem = {
+          group_empty_dirs = true,
           follow_current_file = {
             enabled = true,
           },
@@ -160,7 +161,7 @@ return {
               renamed   = "󰁕",
               untracked = "",
               ignored   = "",
-              unstaged  = "󰄱",
+              unstaged  = "󰄱 ",
               staged    = "",
               conflict  = "",
             },
