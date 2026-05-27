@@ -4,12 +4,13 @@ return {
     "mfussenegger/nvim-dap",
     config = function()
       local dap = require("dap")
-      local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
 
+      vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#e51400" })
+      vim.api.nvim_set_hl(0, "DapStopped", { fg = "#ffcc00", bg = "#3d3000" })
 
-      vim.fn.sign_define("DapBreakPoint", {
+      vim.fn.sign_define("DapBreakpoint", {
         text = "󰐾 ",
-        texthl = "DapBreakPoint",
+        texthl = "DapBreakpoint",
         linehl = "",
         numhl = "",
       })
@@ -20,7 +21,7 @@ return {
         numhl = ""
       })
 
-      --- Java debug adapter
+
       dap.configurations.java = {
         {
           type = "java",
@@ -30,29 +31,6 @@ return {
           port = 25005,
         }
       }
-
-      if not gitsigns_ok then
-        return
-      end
-
-      dap.listeners.after.event_initialized["gitsigns_blame"] = function()
-        gitsigns.toggle_current_line_blame(false)
-      end
-      dap.listeners.before.event_terminated["gitsigns_blame"] = function()
-        gitsigns.toggle_current_line_blame(true)
-      end
-      dap.listeners.before.event_exited["gitsigns_blame"] = function()
-        gitsigns.toggle_current_line_blame(true)
-      end
-    end,
-  },
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
-    config = function()
-      require("nvim-dap-virtual-text").setup()
     end,
   },
 }
