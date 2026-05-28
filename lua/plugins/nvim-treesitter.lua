@@ -13,6 +13,7 @@ return {
       "nginx",
       "python",
       "terraform",
+      "sql",
       "typescript",
       "tsx",
       "yaml",

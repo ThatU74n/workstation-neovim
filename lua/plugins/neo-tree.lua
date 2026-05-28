@@ -48,38 +48,20 @@ return {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      vim.api.nvim_set_hl(0, "NeoTreeAnsible", { fg = "#FFFFFF" })
-      vim.api.nvim_set_hl(0, "NeoTreeGitHub",  { fg = "#FEFEFE" })
-      vim.api.nvim_set_hl(0, "NeoTreeGitea",   { fg = "#609926" })
-      vim.api.nvim_set_hl(0, "NeoTreeHelm",    { fg = "#3A46E8" })
-      vim.api.nvim_set_hl(0, "NeoTreeTerraform", { fg = "#7B42BC" })
-      vim.api.nvim_set_hl(0, "NeoTreeK8s",     { fg = "#326CE5" })
-      vim.api.nvim_set_hl(0, "NeoTreeArgoCD",  { fg = "#EE6600" })
-
-      local icons = {
-        github          = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-github
-        gitea           = { icon = " ", hl = "NeoTreeGitea" },           -- nf-dev-gitea
-        github_actions  = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-github_actions
-        test            = { icon = " ", hl = "NeoTreeGitHub" },          -- nf-dev-test_tube
-        doc             = { icon = "󱔘 ", hl = "NeoTreeGitHub" },          -- nf-dev-document
-        k8s             = { icon = " ", hl = "NeoTreeK8sIcon" },         -- nf-dev-kubernetes 
-        ansible         = { icon = " ", hl = "NeoTreeAnsible" },         -- nf-dev-ansible 
-        terraform       = { icon = " ", hl = "NeoTreeTerraform" },       -- nf-dev-terraform
-        helm            = { icon = " ", hl = "NeoTreeHelm" },            -- nf-dev-helm
-        argocd          = { icon = " ", hl = "NeoTreeArgoCD" },          -- nf-dev-argocd
-      }
-
+      local icons = require("theme")
       local path_cache = {}
 
       local function detect_project_type(path, name)
-        if path_cache[path] ~= nil then return path_cache[path] end
+        if path_cache[path] ~= nil then
+          return path_cache[path]
+        end
         local type
         if name == ".github" then
           type = "github"
         elseif name == ".gitea" then
           type = "gitea"
         elseif name == "docs" or name == "doc" then
-          type = "doc"
+          type = "document"
         elseif name == "tests" or name == "test" then
           type = "test"
         elseif name == "argocd" or name == "gitops" then
@@ -90,8 +72,10 @@ return {
           type = "ansible"
         elseif vim.fn.filereadable(path .. "/main.tf") == 1 then
           type = "terraform"
-        elseif vim.fn.filereadable(path .. "/Chart.yaml") == 1
-            or vim.fn.filereadable(path .. "/values.yaml") == 1 then
+        elseif
+          vim.fn.filereadable(path .. "/Chart.yaml") == 1
+          or vim.fn.filereadable(path .. "/values.yaml") == 1
+        then
           type = "helm"
         end
 
@@ -107,18 +91,17 @@ return {
       end
 
       local function render_file(path)
-        local parent      = vim.fn.fnamemodify(path, ":h:t")
+        local parent = vim.fn.fnamemodify(path, ":h:t")
         local grandparent = vim.fn.fnamemodify(path, ":h:h:t")
         if parent == "workflows" and (grandparent == ".github" or grandparent == ".gitea") then
           return { text = icons.github_actions.icon .. " ", highlight = icons.github_actions.hl }
         end
-
       end
 
       require("nvim-web-devicons").setup({
         override_by_extension = {
-          ["yaml"] = { icon = "󰈙", color = "#6d8086", name = "Yaml" },
-          ["yml"]  = { icon = "󰈙", color = "#6d8086", name = "Yml" },
+          ["yaml"] = icons.yaml,
+          ["yml"] = icons.yaml,
         },
       })
 
@@ -148,22 +131,23 @@ return {
                 result = render_file(node.path)
               end
 
-              return result or require("neo-tree.sources.filesystem.components").icon(config, node, state)
-            end
+              return result
+                or require("neo-tree.sources.filesystem.components").icon(config, node, state)
+            end,
           },
         },
         default_component_configs = {
           git_status = {
             symbols = {
-              added     = "",
-              modified  = "",
-              deleted   = "✖",
-              renamed   = "󰁕",
+              added = "",
+              modified = "",
+              deleted = "✖",
+              renamed = "󰁕",
               untracked = "",
-              ignored   = "",
-              unstaged  = "󰄱 ",
-              staged    = "",
-              conflict  = "",
+              ignored = "",
+              unstaged = "󰄱 ",
+              staged = "",
+              conflict = "",
             },
           },
         },

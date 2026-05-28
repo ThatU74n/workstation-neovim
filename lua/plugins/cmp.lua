@@ -56,5 +56,14 @@ return {
         }),
       },
     })
+
+    cmp.setup.filetype({
+      "sql",
+    }, {
+      sources = cmp.config.sources({
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
+      }),
+    })
   end,
 }
