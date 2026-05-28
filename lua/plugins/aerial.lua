@@ -4,8 +4,8 @@ return {
   config = function()
     require("aerial").setup({
       backends = {
-        ["_"]            = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
-        yaml             = { "treesitter" },
+        ["_"] = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+        yaml = { "treesitter" },
       },
       layout = {
         default_direction = "right",
@@ -19,7 +19,7 @@ return {
       post_parse_symbol = function(bufnr, item, ctx)
         local detail = ctx.symbol and ctx.symbol.detail or nil
         if detail and detail ~= "" then
-          item.name = item.name .. detail
+          item.name = item.name .. " : " .. detail
         end
         return true
       end,

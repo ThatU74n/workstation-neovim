@@ -17,7 +17,7 @@ end
 function M.setup()
   local dap = require("dap")
   local widgets = require("dap.ui.widgets")
-  local agent = require("dap_agent")
+  local agent = require("agent.dap_agent")
 
   vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Attach / continue" })
   vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
@@ -30,7 +30,9 @@ function M.setup()
     widgets.centered_float(widgets.scopes)
     agent.dump_context()
   end, { desc = "DAP scopes (+ dump context)" })
-  vim.keymap.set("n", "<leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "DAP frames" })
+  vim.keymap.set("n", "<leader>df", function()
+    widgets.centered_float(widgets.frames)
+  end, { desc = "DAP frames" })
   vim.keymap.set("n", "<leader>da", toggle_agent_socket, { desc = "Toggle DAP agent socket" })
 end
 
