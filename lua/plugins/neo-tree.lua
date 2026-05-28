@@ -48,7 +48,7 @@ return {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      local icons = require("theme")
+      local icons = require("config.theme")
       local path_cache = {}
 
       local function detect_project_type(path, name)
